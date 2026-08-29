@@ -1,3 +1,28 @@
 'use client';
+
 import {useEffect,useState} from 'react';
-export function ClientExperience(){const[count,setCount]=useState(47);const[loaded,setLoaded]=useState(false);useEffect(()=>{setLoaded(true);const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const coarse=matchMedia('(pointer: coarse)').matches;const timer=setInterval(()=>setCount(Math.floor(Math.random()*25)+34),9000);const observer=new IntersectionObserver(entries=>entries.forEach(entry=>entry.isIntersecting&&entry.target.classList.add('visible')),{threshold:.12});document.querySelectorAll('.reveal').forEach(element=>observer.observe(element));const glow=(event:PointerEvent)=>{const target=(event.target as Element).closest<HTMLElement>('.glow-zone');if(target){const rect=target.getBoundingClientRect();target.style.setProperty('--glow-x',`${event.clientX-rect.left}px`);target.style.setProperty('--glow-y',`${event.clientY-rect.top}px`)}};const magnetic=(event:PointerEvent)=>{const button=(event.target as Element).closest<HTMLElement>('.magnetic');if(button){const rect=button.getBoundingClientRect();button.style.transform=`translate(${(event.clientX-(rect.left+rect.width/2))*.08}px,${(event.clientY-(rect.top+rect.height/2))*.08}px)`}};const reset=(event:PointerEvent)=>{const button=(event.target as Element).closest<HTMLElement>('.magnetic');if(button)button.style.transform=''};if(!reduced&&!coarse){document.addEventListener('pointermove',glow);document.addEventListener('pointermove',magnetic);document.addEventListener('pointerout',reset)}return()=>{clearInterval(timer);observer.disconnect();document.removeEventListener('pointermove',glow);document.removeEventListener('pointermove',magnetic);document.removeEventListener('pointerout',reset)}},[]);return <><div className={`loader ${loaded?'loaded':''}`}><div>ZIA<span>JEWELLERS</span><i/></div></div><aside className="live"><b>● LIVE</b><span>{count} currently exploring</span><small>Simulated browsing indicator</small></aside></>}
+
+export function ClientExperience(){
+  const[count,setCount]=useState(47);
+
+  useEffect(()=>{
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse=matchMedia('(pointer: coarse)').matches;
+    const timer=setInterval(()=>setCount(Math.floor(Math.random()*25)+34),9000);
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>entry.isIntersecting&&entry.target.classList.add('visible')),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(element=>observer.observe(element));
+    const glow=(event:PointerEvent)=>{
+      const target=(event.target as Element).closest<HTMLElement>('.glow-zone');
+      if(target){const rect=target.getBoundingClientRect();target.style.setProperty('--glow-x',`${event.clientX-rect.left}px`);target.style.setProperty('--glow-y',`${event.clientY-rect.top}px`)}
+    };
+    const magnetic=(event:PointerEvent)=>{
+      const button=(event.target as Element).closest<HTMLElement>('.magnetic');
+      if(button){const rect=button.getBoundingClientRect();button.style.transform=`translate(${(event.clientX-(rect.left+rect.width/2))*.08}px,${(event.clientY-(rect.top+rect.height/2))*.08}px)`}
+    };
+    const reset=(event:PointerEvent)=>{const button=(event.target as Element).closest<HTMLElement>('.magnetic');if(button)button.style.transform=''};
+    if(!reduced&&!coarse){document.addEventListener('pointermove',glow);document.addEventListener('pointermove',magnetic);document.addEventListener('pointerout',reset)}
+    return()=>{clearInterval(timer);observer.disconnect();document.removeEventListener('pointermove',glow);document.removeEventListener('pointermove',magnetic);document.removeEventListener('pointerout',reset)};
+  },[]);
+
+  return <aside className="live"><b>● LIVE</b><span>{count} currently exploring</span><small>Simulated browsing indicator</small></aside>;
+}

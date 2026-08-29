@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {ArrowDown,ArrowUpRight,ChevronLeft,ChevronRight} from 'lucide-react';
+import {ArrowDown,ArrowUpRight} from 'lucide-react';
 import {useEffect,useRef,useState} from 'react';
 import type {WebsiteImage} from '@/lib/site-images';
 
@@ -13,7 +13,6 @@ export function Hero({slides}:{slides:WebsiteImage[]}){
   return <section id="top" className="hero" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={()=>setPaused(false)} onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX??null}} onTouchEnd={event=>{if(touchStart.current===null)return;const distance=(event.changedTouches[0]?.clientX??touchStart.current)-touchStart.current;if(Math.abs(distance)>45)select(index+(distance<0?1:-1));touchStart.current=null}}>
     <div className="hero-media" aria-live="off">{slides.map((slide,slideIndex)=><div className={`hero-slide ${slideIndex===index?'active':''}`} aria-hidden={slideIndex!==index} key={slide.slot}><picture>{slide.mobileImageUrl&&<source media="(max-width: 640px)" srcSet={slide.mobileImageUrl}/>}<Image src={slide.imageUrl} alt={slideIndex===index?slide.altText:''} fill priority={slideIndex===0} sizes="100vw" style={{objectPosition:slide.objectPosition}}/></picture></div>)}</div>
     <div className="hero-shade"/><div className="hero-copy reveal"><p className="eyebrow">ZIA JEWELLERS <i/></p><h1>TIMELESS GOLD.<br/><em>ETERNAL STORIES.</em></h1><p className="lede">Exceptional craftsmanship, refined design, and timeless pieces created to become part of your story.</p><div className="ctas"><Link className="btn gold magnetic" href="/collections">Explore collection <ArrowUpRight size={15}/></Link><a className="btn ghost" href="#visit">Visit our showroom</a></div></div>
-    <div className="hero-slider-controls"><button type="button" onClick={()=>select(index-1)} aria-label="Previous hero image"><ChevronLeft/></button><div className="hero-dots" role="tablist" aria-label="Hero images">{slides.map((slide,slideIndex)=><button type="button" role="tab" aria-label={`Show image ${slideIndex+1}`} aria-selected={slideIndex===index} onClick={()=>select(slideIndex)} key={slide.slot}><span/></button>)}</div><button type="button" onClick={()=>select(index+1)} aria-label="Next hero image"><ChevronRight/></button></div>
     <a href="#manifesto" className="scroll">SCROLL <ArrowDown size={15}/></a>
   </section>;
 }

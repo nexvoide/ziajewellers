@@ -8,6 +8,7 @@ import {Navbar} from './navbar';
 import {SearchOverlay} from './search-overlay';
 import {WhatsappButton} from './whatsapp-button';
 import {WishlistProvider} from './wishlist-provider';
+import {PageLoader} from './page-loader';
 
 const DISMISS_KEY = 'zia-product-spotlight-dismissed';
 export function SiteShell({children,products}: {children: React.ReactNode;products:Product[]}) {
@@ -52,6 +53,7 @@ export function SiteShell({children,products}: {children: React.ReactNode;produc
 
   return (
     <WishlistProvider>
+      <PageLoader />
       <Navbar onSearch={() => setSearch(true)} />
       <SearchOverlay products={products} open={search} onClose={() => setSearch(false)} />
       <div className="page-enter">{children}</div>
