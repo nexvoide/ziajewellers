@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import {FormEvent,useState} from 'react';
-import {ArrowLeft,Gem,LineChart,Lock,LogOut,Save} from 'lucide-react';
+import {ArrowLeft,Gem,Images,LineChart,Lock,LogOut,Save} from 'lucide-react';
 import type {LocalMarketRates} from '@/lib/metal-rates';
 import {ArticleManager} from './article-manager';
+import {WebsiteImageManager} from './website-image-manager';
 
 export function RatesDashboard({authenticated:initialAuth,configured,initialRates}:{authenticated:boolean;configured:boolean;initialRates:LocalMarketRates}){
   const[authenticated,setAuthenticated]=useState(initialAuth);const[error,setError]=useState('');
@@ -20,8 +21,8 @@ function Login({onSuccess,error,setError}:{onSuccess:()=>void;error:string;setEr
 }
 
 function Editor({initialRates,onLogout}:{initialRates:LocalMarketRates;onLogout:()=>void}){
-  const[tab,setTab]=useState<'rates'|'articles'>('rates');
-  return <DashboardFrame><div className="dashboard-toolbar"><div><p className="eyebrow">ZIA JEWELLERS</p><h1>OWNER DASHBOARD</h1></div><button onClick={onLogout}><LogOut size={16}/> Sign out</button></div><nav className="dashboard-tabs" aria-label="Dashboard sections"><button className={tab==='rates'?'active':''} onClick={()=>setTab('rates')}><LineChart size={17}/> Market rates</button><button className={tab==='articles'?'active':''} onClick={()=>setTab('articles')}><Gem size={17}/> Articles</button></nav>{tab==='rates'?<RatesEditor initialRates={initialRates}/>:<ArticleManager/>}</DashboardFrame>;
+  const[tab,setTab]=useState<'rates'|'articles'|'images'>('rates');
+  return <DashboardFrame><div className="dashboard-toolbar"><div><p className="eyebrow">ZIA JEWELLERS</p><h1>OWNER DASHBOARD</h1></div><button onClick={onLogout}><LogOut size={16}/> Sign out</button></div><nav className="dashboard-tabs" aria-label="Dashboard sections"><button className={tab==='rates'?'active':''} onClick={()=>setTab('rates')}><LineChart size={17}/> Market rates</button><button className={tab==='articles'?'active':''} onClick={()=>setTab('articles')}><Gem size={17}/> Articles</button><button className={tab==='images'?'active':''} onClick={()=>setTab('images')}><Images size={17}/> Website images</button></nav>{tab==='rates'?<RatesEditor initialRates={initialRates}/>:tab==='articles'?<ArticleManager/>:<WebsiteImageManager/>}</DashboardFrame>;
 }
 
 function RatesEditor({initialRates}:{initialRates:LocalMarketRates}){
