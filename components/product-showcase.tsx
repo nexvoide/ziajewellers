@@ -1,0 +1,2 @@
+import Link from 'next/link';import type {Product} from '@/data/products';import {ProductGrid} from './product-grid';
+export function ProductShowcase({products}:{products:Product[]}){return <section id="products" className="products section"><div className="section-head reveal"><div><p className="eyebrow">SIGNATURE PIECES</p><h2>Objects of<br/><em>desire</em></h2></div><Link className="text-link" href="/collections">View all pieces</Link></div><ProductGrid items={products.filter(p=>p.featured).slice(0,8)}/></section>}

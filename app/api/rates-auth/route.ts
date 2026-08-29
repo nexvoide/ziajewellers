@@ -1,0 +1,4 @@
+import {NextResponse} from 'next/server';
+import {credentialsConfigured,COOKIE_NAME,sessionToken,verifyPassword} from '@/lib/rates-auth';
+export async function POST(request:Request){if(!credentialsConfigured())return NextResponse.json({error:'Dashboard authentication is not configured.'},{status:503});const body=await request.json().catch(()=>null) as {password?:unknown}|null;if(!body||typeof body.password!=='string'||!verifyPassword(body.password))return NextResponse.json({error:'Incorrect password.'},{status:401});const response=NextResponse.json({success:true});response.cookies.set(COOKIE_NAME,sessionToken(),{httpOnly:true,sameSite:'strict',secure:process.env.NODE_ENV==='production',path:'/',maxAge:60*60*8});return response}
+export async function DELETE(){const response=NextResponse.json({success:true});response.cookies.set(COOKIE_NAME,'',{httpOnly:true,sameSite:'strict',secure:process.env.NODE_ENV==='production',path:'/',maxAge:0});return response}

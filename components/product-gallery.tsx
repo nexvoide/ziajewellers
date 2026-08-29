@@ -1,0 +1,4 @@
+'use client';
+import Image from 'next/image';
+import {useState} from 'react';
+export function ProductGallery({images,name}:{images:string[];name:string}){const[selected,setSelected]=useState(0);const[zoom,setZoom]=useState(false);return <div className="gallery"><button className={`gallery-main ${zoom?'zoomed':''}`} onClick={()=>setZoom(x=>!x)} aria-label={`${zoom?'Disable':'Enable'} image zoom`}><Image src={images[selected]} alt={`${name}, view ${selected+1}`} fill priority sizes="(max-width: 900px) 100vw, 58vw"/></button><div className="thumbnails" role="tablist" aria-label={`${name} gallery`}>{images.map((src,i)=><button role="tab" aria-selected={selected===i} aria-label={`Show ${name} image ${i+1}`} key={src} onClick={()=>{setSelected(i);setZoom(false)}}><Image src={src} alt="" width={110} height={130}/></button>)}</div></div>}

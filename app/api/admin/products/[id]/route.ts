@@ -1,0 +1,12 @@
+import {NextResponse} from 'next/server';
+import {cookies} from 'next/headers';
+import {COOKIE_NAME,verifySession} from '@/lib/rates-auth';
+import {createAdminClient} from '@/lib/supabase/admin';
+
+async function authorized(){const store=await cookies();return verifySession(store.get(COOKIE_NAME)?.value)}
+function unauthorized(){return NextResponse.json({error:'Unauthorized.'},{status:401})}
+function productId(value:string){const id=Number(value);if(!Number.isSafeInteger(id)||id<=0)throw new Error('Invalid article ID.');return id}
+
+export async function PATCH(request:Request,{params}:{params:Promise<{id:string}>}){if(!await authorized())return unauthorized();try{const id=productId((await params).id);const body=await request.json() as Record<string,unknown>;const allowed=new Set(['name','slug','category','collection','price','gold_purity','weight','description','short_description','featured','trending','new_arrival','bridal','gender','availability','details','published']);const update=Object.fromEntries(Object.entries(body).filter(([key])=>allowed.has(key)));if(!Object.keys(update).length)throw new Error('No editable fields supplied.');const {data,error}=await createAdminClient().from('products').update({...update,updated_at:new Date().toISOString()}).eq('id',id).select().single();if(error)throw error;return NextResponse.json({product:data})}catch(error){return NextResponse.json({error:error instanceof Error?error.message:'Unable to update article.'},{status:400})}}
+
+export async function DELETE(_:Request,{params}:{params:Promise<{id:string}>}){if(!await authorized())return unauthorized();try{const id=productId((await params).id);const supabase=createAdminClient();const {data,error:readError}=await supabase.from('products').select('images').eq('id',id).single();if(readError)throw readError;const {error}=await supabase.from('products').delete().eq('id',id);if(error)throw error;const prefix='/storage/v1/object/public/product-images/';const paths=((data?.images??[]) as string[]).map(url=>{const index=url.indexOf(prefix);return index<0?null:decodeURIComponent(url.slice(index+prefix.length))}).filter((path):path is string=>Boolean(path));if(paths.length)await supabase.storage.from('product-images').remove(paths);return NextResponse.json({success:true})}catch(error){return NextResponse.json({error:error instanceof Error?error.message:'Unable to delete article.'},{status:400})}}

@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export function Footer(){return <footer><div className="footer-brand">ZIA <span>JEWELLERS</span></div><p>Timeless pieces. Exceptional craftsmanship.</p><div className="footer-links"><Link href="/collections">Collections</Link><Link href="/bridal">Bridal</Link><a href="/#story">Our Story</a><a href="/#visit">Contact</a></div><small>© 2026 Zia Jewellers · Business details pending verification</small></footer>}
