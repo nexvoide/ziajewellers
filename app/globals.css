@@ -92,3 +92,60 @@ body{font-weight:400}.navlinks,.lede,.section-head>p,.editorial article p,.focus
 
 /* Preserve complete product photography on narrow screens */
 @media(max-width:720px){.product-visual{background:#151210}.product-visual img,.product:nth-child(even) .product-visual img,.product:hover .product-visual img{object-fit:contain;object-position:center!important;transform:none!important;filter:none}.gallery-main img,.quick-image img{object-fit:contain;object-position:center}.thumbnails img{object-fit:contain;background:#151210}.attachment-preview img{object-fit:contain;background:#151210}}
+
+/* Pakistan market rates */
+.rates-heading{align-items:flex-end;gap:clamp(30px,6vw,90px);margin-bottom:48px}
+.rates-heading>div{max-width:900px}
+.rates-heading h2{font-size:clamp(54px,6.6vw,104px);line-height:.88}
+.rates-intro{max-width:560px;margin:24px 0 0;color:#aaa097;font-size:12px;line-height:1.8}
+.rates-heading>button{flex:0 0 auto;cursor:pointer}
+.rate-board{overflow:hidden;border:1px solid #c9a45c52;background:linear-gradient(135deg,#100d0a 0%,#080706 65%);box-shadow:0 28px 80px #0003}
+.rate-board-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 32px;border-bottom:1px solid #ffffff14}
+.rate-board-title{display:flex;align-items:center;gap:16px}
+.rate-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid #c9a45c4d;background:#c9a45c0f;color:var(--gold)}
+.rate-board-title h3{margin:0;font:400 clamp(25px,2.4vw,34px) var(--serif)}
+.rate-board-title p{margin:6px 0 0;color:#8f867e;font-size:8px;letter-spacing:.16em;text-transform:uppercase}
+.rate-status{display:flex;align-items:center;gap:9px;color:#9b9187;font-size:8px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.rate-status i{width:7px;height:7px;border-radius:50%;background:#766e67;box-shadow:0 0 0 4px #766e6715}
+.rate-status.is-live{color:#a7bc94}
+.rate-status.is-live i{background:#82a565;box-shadow:0 0 0 4px #82a56520}
+.rate-column-labels,.rate-row{display:grid;grid-template-columns:minmax(170px,.8fr) 1.1fr 1.1fr;align-items:center}
+.rate-column-labels{padding:13px 32px;color:#776f68;background:#ffffff05;font-size:7px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.rate-row{min-height:122px;padding:24px 32px;border-top:1px solid #ffffff12}
+.rate-metal{display:grid;gap:7px}
+.rate-metal strong{font:400 clamp(27px,2.5vw,38px) var(--serif);color:var(--soft)}
+.rate-metal span{color:#827a73;font-size:8px;letter-spacing:.16em;text-transform:uppercase}
+.rate-value{display:grid;gap:9px;min-width:0}
+.rate-value small{display:none;color:#827a73;font-size:7px;letter-spacing:.16em;text-transform:uppercase}
+.rate-value strong{font:400 clamp(25px,3vw,44px) var(--serif);white-space:nowrap}
+.rate-unavailable{grid-column:2/4;margin:0;font:italic 22px var(--serif);color:#756d65}
+.rate-board-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 32px;border-top:1px solid #c9a45c2b;color:#81786f;font-size:8px;letter-spacing:.12em}
+.rate-board-footer span{display:flex;align-items:center;gap:8px}
+.rate-board-footer svg{color:var(--gold)}
+.rates-foot{margin-top:22px}
+.rates-foot p{max-width:940px;margin:0;font-size:9px}
+.rates-foot p a{font-size:inherit;letter-spacing:normal;text-transform:none;text-decoration:underline;text-underline-offset:3px}
+
+@media(max-width:720px){
+  .rates-heading{margin-bottom:34px}
+  .rates-heading h2{font-size:clamp(48px,13vw,66px)}
+  .rate-board-header{padding:22px 18px}
+  .rate-board-title{gap:12px}
+  .rate-icon{width:38px;height:38px}
+  .rate-status{font-size:7px}
+  .rate-column-labels{display:none}
+  .rate-row{grid-template-columns:1fr 1fr;gap:24px 12px;min-height:0;padding:24px 18px}
+  .rate-metal{grid-column:1/-1;display:flex;align-items:baseline;gap:10px}
+  .rate-metal strong{font-size:28px}
+  .rate-value small{display:block}
+  .rate-value strong{font-size:clamp(19px,5.6vw,27px)}
+  .rate-unavailable{grid-column:1/-1;font-size:19px}
+  .rate-board-footer{display:grid;padding:16px 18px;line-height:1.5}
+}
+
+@media(max-width:390px){
+  .rate-board-header{align-items:flex-start}
+  .rate-status{margin-top:5px}
+  .rate-status i{flex:0 0 auto}
+  .rate-value strong{font-size:18px}
+}
